@@ -1,0 +1,110 @@
+-- =====================================
+-- 1. CREACIÓN DE LA BASE DE DATOS
+-- =====================================
+CREATE DATABASE IF NOT EXISTS banco;
+USE banco;
+
+-- =====================================
+-- 2. CONSULTAS CON SUBCONSULTAS
+-- =====================================
+
+-- 1. Usuarios con saldo mayor al promedio
+SELECT Nombre_Completo
+FROM usuarios
+WHERE Identificacion IN (
+    SELECT ID_Titular
+    FROM cuentas
+    WHERE Saldo > (SELECT AVG(Saldo) FROM cuentas)
+);
+
+-- 2. Cuentas con saldo mayor al máximo préstamo aprobado
+SELECT Numero_Cuenta, Saldo
+FROM cuentas
+WHERE Saldo > (
+    SELECT MAX(Monto_Aprobado)
+    FROM prestamos
+);
+
+-- 3. Usuarios que han hecho transferencias
+SELECT Nombre_Completo
+FROM usuarios
+WHERE ID_Usuario IN (
+    SELECT ID_Usuario_Origen
+    FROM transferencias
+);
+
+-- =====================================
+-- 3. CONSULTAS CON FILTROS (=)
+-- =====================================
+
+-- 4. Usuarios activos
+SELECT * 
+FROM usuarios
+WHERE Estado = 'Activo';
+
+-- 5. Cuentas tipo Ahorros
+SELECT * 
+FROM cuentas
+WHERE Tipo_Cuenta = 'Ahorros';
+
+-- 6. Préstamos aprobados
+SELECT * 
+FROM prestamos
+WHERE Estado_Prestamo = 'Aprobado';
+
+-- =====================================
+-- 4. CONSULTAS CON JOIN (INNER JOIN)
+-- =====================================
+
+-- 7. Usuarios con sus cuentas
+SELECT u.Nombre_Completo, c.Numero_Cuenta, c.Saldo
+FROM usuarios u
+JOIN cuentas c ON u.Identificacion = c.ID_Titular;
+
+-- 8. Transferencias con usuario
+SELECT t.ID_Transferencia, u.Nombre_Completo, t.Monto
+FROM transferencias t
+JOIN usuarios u ON t.ID_Usuario_Origen = u.ID_Usuario;
+
+-- 9. Préstamos con cliente
+SELECT p.ID_Prestamo, u.Nombre_Completo, p.Monto_Aprobado
+FROM prestamos p
+JOIN usuarios u ON p.ID_Cliente = u.Identificacion;
+
+-- =====================================
+-- 5. CONSULTAS CON LEFT JOIN
+-- =====================================
+
+-- 10. Usuarios con cuentas (aunque no tengan)
+SELECT u.Nombre_Completo, c.Numero_Cuenta
+FROM usuarios u
+LEFT JOIN cuentas c ON u.Identificacion = c.ID_Titular;
+
+-- 11. Usuarios con préstamos (aunque no tengan)
+SELECT u.Nombre_Completo, p.ID_Prestamo
+FROM usuarios u
+LEFT JOIN prestamos p ON u.Identificacion = p.ID_Cliente;
+
+-- 12. Usuarios con auditoría
+SELECT u.Nombre_Completo, a.Accion
+FROM usuarios u
+LEFT JOIN auditoria_sql a ON u.ID_Usuario = a.ID_Usuario;
+
+-- =====================================
+-- 6. CONSULTAS CON RIGHT JOIN
+-- =====================================
+
+-- 13. Cuentas con usuario
+SELECT u.Nombre_Completo, c.Numero_Cuenta
+FROM usuarios u
+RIGHT JOIN cuentas c ON u.Identificacion = c.ID_Titular;
+
+-- 14. Transferencias con usuario
+SELECT u.Nombre_Completo, t.ID_Transferencia
+FROM usuarios u
+RIGHT JOIN transferencias t ON u.ID_Usuario = t.ID_Usuario_Origen;
+
+-- 15. Préstamos con usuario
+SELECT u.Nombre_Completo, p.ID_Prestamo
+FROM usuarios u
+RIGHT JOIN prestamos p ON u.Identificacion = p.ID_Cliente;
