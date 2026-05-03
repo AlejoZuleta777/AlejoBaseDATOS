@@ -17,6 +17,15 @@ Sistema bancario implementado en MySQL donde la lógica del negocio se gestiona 
 4_pruebas.sql → pruebas funcionales  
 5_extra_reconstruccion.sql → recuperación de saldos  
 
+
+## Enfoque DDD
+El proyecto sigue principios de Domain-Driven Design (DDD), donde:
+- Las entidades del dominio se representan en tablas
+- Las reglas de negocio se implementan mediante triggers
+- Los servicios del dominio se encapsulan en procedimientos almacenados
+
+  
+
 ## Tecnologías
 - MySQL
 
