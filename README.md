@@ -1,17 +1,24 @@
-# Recuperación de Saldos Bancarios con Cursores
+# Proyecto Base de Datos Banco
 
-## Problema
-En el banco ocurrió un incidente donde los triggers dejaron de funcionar.  
-Como consecuencia:
-- No se actualizaron los saldos
-- No se registraron eventos en auditoría
-- Las transferencias continuaron registrándose
+## Descripción
+Sistema bancario implementado en MySQL donde la lógica del negocio se gestiona mediante triggers y procedimientos almacenados.
 
-## Objetivo
-Recrear los saldos correctos mediante un procedimiento almacenado usando cursores.
+## Funcionalidades
+- Creación de clientes y cuentas
+- Transferencias bancarias
+- Validación automática de saldo
+- Aprobación de transferencias
+- Reconstrucción de saldos mediante cursores
 
-## Solución
-Se desarrolló el procedimiento:
+## Estructura
+1_tablas.sql → estructura de la base de datos  
+2_triggers.sql → reglas automáticas  
+3_procedimientos.sql → lógica del sistema  
+4_pruebas.sql → pruebas funcionales  
+5_extra_reconstruccion.sql → recuperación de saldos  
 
-```sql
-CALL reconstruir_saldos();
+## Tecnologías
+- MySQL
+
+## Autor
+Maicol Alejandro Sanchez
