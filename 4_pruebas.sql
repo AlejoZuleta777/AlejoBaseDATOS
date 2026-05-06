@@ -108,3 +108,18 @@ RIGHT JOIN transferencias t ON u.ID_Usuario = t.ID_Usuario_Origen;
 SELECT u.Nombre_Completo, p.ID_Prestamo
 FROM usuarios u
 RIGHT JOIN prestamos p ON u.Identificacion = p.ID_Cliente;
+
+
+
+CALL sp_crear_cliente(
+'Juan',
+'123',
+'juan@gmail.com',
+'300111111',
+'Medellin',
+'Persona'
+);
+
+CALL sp_depositar(1001,50000);
+
+CALL sp_listar_clientes();
