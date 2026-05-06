@@ -3,7 +3,7 @@
 ## Descripción
 Sistema bancario implementado en MySQL donde la lógica del negocio se gestiona mediante triggers y procedimientos almacenados.
 
-## Funcionalidades
+## Servicios del Dominio
 - Creación de clientes y cuentas
 - Transferencias bancarias
 - Validación automática de saldo
